@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<!------------------------- 2022.03. 수업내용------------------>
+
+웹브라우저에서 요청을 보내는 방법<br>
+
+1.웹브라우저 주소창에서 요청주소를 직접 입력<br>
+
+2.링크 엘리먼트(a)를 클릭하여 요청 전송<br>
+<a href="http://localhost:8000/exweb/hello.do">Hello 서블릿 실행</a><br>
+현재 문서의 주소와 요청을 보낸느 서버 주소(ip주소,포트번호)가 동일하면 생략가능<br>
+<!--절대경로
+/가 들어가면 컴퓨터의 최상위 경로를 쓴것이라 생각한다.-->
+<a href="/exweb/hello.do">Hello 서블릿 실행</a><br>
+<!--상대경로
+/가 없고 알파벳만 있으면 현내 폴더를 기준으로 삼는다.-->
+현재 문서와 폴더 경로가 동일하면 생략 가능<br>
+<a href="hello.do">Hello 서블릿 실행!!</a>
+<br>
+3.폼 엘리먼트를 제출(전송)하여 요청,전송 파라미터 값을 편하게 입력할수 있다
+
+<!--"http://localhost:8000/exweb/hello.do"-->
+<!--"/exweb/hello.do" 도 가능-->
+type="submit"인 input를 엘리먼트를 클리하면
+form 엘리먼트의 action속성값으로 지정한 주소로 이동(요청전송)
+<form action="hello.do">
+<label>hello.do로 이동함 눌러보셈<input type="submit"></label>
+</form>
+<hr>
+
+<!-- 2022.03.24 오늘한 내용------------------------------------->
+
+<strong>절대경로와 상대경로</strong>
+<br>
+절대경로<br>
+<a href="http://localhost:8000/exweb/temp/link.html">링크테스트 문서로 이동1</a><br>
+<a href="/exweb/temp/link.html">링크테스트 문서로 이동1</a><br>
+<!-- 이거는 절대경로 아님 -->
+<!-- 이거는 상대경로임-->
+<a href="temp/link.html">링크테스트 문서로 이동1</a><br>
+
+상대경로<br>
+<a href="link.html">링크테스트 문서로 이동2</a><br>
+<!-- 이렇게 쓰면 안됨 -->
+<!--이렇게 쓰면 같은 폴더에 있는거라고 말하는거  -->
+<a href="temp/link.html">링크테스트 문서로 이동2</a><br>
+<a href="./temp/link.html">링크테스트 문서로 이동2</a><br>
+<a href="./temp/../temp/link.html">링크테스트 문서로 이동2</a><br>
+<!-- <a href="현재디렉토리/temp/link.html">링크테스트 문서로 이동</a> -->
+<!-- 경로지정시 .은 현재디렉토리, ..은 부모디렉토리를 의미 -->
+
+<br>
+<hr>
+요청방식의 종류<br>
+요청방식(=http method=http command):get,post,put,delete....<br>
+get:불러옴<br>
+post:저장해라<br>
+put:교체해라<br>
+delelte:삭제해라<br>
+<br>
+get:파라미터를 주소에 붙여서 전송<br>
+--주소창에 주소를 직접 입력해준다.<br>
+--링크(a)를 클릭한경우,method 지점을 생략한 form을 submit<br>
+post:파라미터를 요청메시지의 바디(내용)에 담아서 전송<br>
+
+<br>
+<hr>
+
+login서블랫으로 text형식의 id파라미터와 pw파라미터를 보내자.<br>
+1.method설정은 하나도 안한 디폴트<br>
+<form action="/exweb/login.do"><br>
+아이디:<input type="text" name ="id"><br>
+비번:<input type="text" name ="pw"><br>
+<input type="submit">
+</form>
+2.GET방식
+<form action="/exweb/login.do" method="get"><br>
+아이디:<input type="text" name ="id"><br>
+비번:<input type="text" name ="pw"><br>
+<input type="submit">
+</form>
+3.Post방식
+<!-- method="post"로 지정한 form 을 submit한 경우 -->
+<form action="/exweb/login.do" method="post"><br>
+아이디:<input type="text" name ="id"><br>
+비번:<input type="text" name ="pw"><br>
+<input type="submit">
+</form>
+
+<hr>
+<strong>GET,POST 예제</strong><br>
+사용자 이름을 입력하고 submit버튼을 클릭하면 <br>
+wecomeservlet이 실행되어 화면에 "000님 환영합니다.가 출력되도록<br>
+form을 작성해보자 <br>
+<br>
+
+1.서블릿을 경로지정하기<br>
+--절대경로 get방식<br>
+
+<form action="http://localhost:8000/exweb/welcom.do" method="get">
+<!-- <form action="/exweb/welcom.do" method="get"> -->
+<!-- 여기까지가 절대경로 -->
+<!-- <form action="/welcom.do" method="get"> -->
+<!-- 이거는 안된다.-->
+입력:<input type="text" name="user">
+<input type="submit">
+<br>
+
+--상대경로 get방식<br>
+
+<form action="welcom.do" method="get">
+입력:<input type="text" name="user">
+<input type="submit">
+</form>
+<!-- java파일은 폴더에서 불러오는게 아님 -->
+<!-- 여태까지 자바파일들은 .java이렇게 연것이 아니라
+서블릿으로 만든 자바를 톰켓과 연결해서 가져왔음 
+즉 .html 처럼 폴더를 이동해서 가져올수는 없다는 이야기임
+브라우저에서 연동된 주소를 가져와서 생각해야 한다는 거임 -->
+<!--welcom.do에 get:파라미터를 주소에 붙여서 전송하겠다..  -->
+<!-- get방식을 쓸때는 한글을 입력해도 문제되지 않는다.
+한글변화 코드가 디폴트로 설정되어있기 때문에 그렇다. -->
+
+<!--text형식으로 입력을 받고 이 입력받은 값의 이름?을 user로 만듬  -->
+<!--파라미터 값을 전달함 
+근데 여기서 전달하는 파라미터값이 user의 파라미터값을 전달하는건지
+어떻게 알수있나? 
+파라미터값이 여러개면 넘겨주는 파라미터값을 어떻게 구분하는거?
+이전시간에 했나?
+form태그 안어서 입력한 모든 파라 미터 값이 전송되는거?
+ -->
+<br>
+--절대경로 post방식
+<!--post방식으로 파라미터를 넘겨줄때는 입력값이 한글일시 문제가 된다.  -->
+<form action="http://localhost:8000/exweb/welcom.do" method="post"><br>
+입력:<input type="text" name="user">
+<input type="submit">
+</form>
+
+<br>
+<hr>
+<strong>예제. 다른 input type 파라미터 보내기</strong><br>
+정수2개와 연산자를 입력 및 선택하고 submit 버튼을 클릭하면,<br>
+addservlet이 실행되고 화면에 연산결과가 출력되도록<br>
+form을 추가하고 , addservlet을 변경<br>
+연산자는 더하기와 곱하기 중에 하나를 선택하고<br>
+더하기를 선택하면 op=p, 곱하기를 선택하면 op=m이라고 파라미터를 전송<br>
+<br>
+
+<form action="http://localhost:8000/exweb/add.do">
+<label><input type="text" name="x">x값 입력</label><br>
+<label><input type="text" name="y">y값 입력</label><br>
+<label><input type="text" name="z">z값 입력</label><br>
+연산자<!-- select사용 -->
+<select name="op">
+<option value="p">더하기</option>
+<option value="m">곱하기</option>
+</select>
+
+<input type="submit">
+
+</form>
+
+<br>
+<hr>
+<strong>예제. 다른input type 파라미터 보내기</strong><br>
+곰 독수리,개중 하나를 선택하고 submit버튼을 클릭하면,<br>
+phtoServlet이 실행되어 화면에 선택한 동물의 사진이 출력되도록 <br>
+form 을 구현<br>
+
+<form action="photo.do">
+
+<label>곰<input type="radio" name ="img" value="bear"></label>
+<label>독수리<input type="radio" name ="img" value= "eagle"></label>
+<label>개<input type="radio" name ="img" value= "dog"></label> 
+<!-- <select name ="img">
+<option value ="bear">곰</option>
+<option value ="eagle">독수리</option>
+<option value ="dog">개</option>
+</select> -->
+<input type="submit">
+</form>
+
+<br>
+<hr>
+
+<h1> 과제 </h1>
+주문자 이름을 입력하고<br>
+피자,햄버거,돈가스,딸기쥬스,오렌지쥬스 중 <br>
+주문하고 싶은 음식을 모두 선택하고 submit 버튼을 클릭하면,<br>
+하면에 선택한 음식의 리스트가 다음과 같이 출력되도록 구현<br>
+(ul태그써서)<br>
+*피자<br>
+*돈가스<br>
+*딸기쥬스<br>
+<br>
+주문자이름은 user=이름으로<br>
+주문자이름 + 총 3개의 음식을 주문했습니다.<br>
+<br>
+피자를 선택하면 ord=p001, <br>
+햄버거를 선택하면 ord=p002,<br>
+딸기주스를 선택하면 ord=p101,<br>
+키위주스를 선택하면 ord=p102,<br>
+파라미터를 post 방식으로 전송<br>
+<br>
+요청주소를 /order.do<br>
+서블릿 클래스 이름은 orderServlet으로 작성<br>
+<hr>
+<form>
+<label>이름을 입력하세요<input type="text"> </label>
+<p>먹고싶은 음식을 선택하세요</p>
+</form>
+
+<hr>
+<strong>강사님 풀이</strong><br>
+<form action="/exweb/order.do" method="post">
+주문자:<input type="text" name="user"/><br>
+<label>피자<input type="checkbox" name="ord" value="p001"/></label>
+<label>행버거<input type="checkbox" name="ord" value="p002"/></label>
+<label>돈가스<input type="checkbox" name="ord" value="p003"/></label>
+<label>딸기주스<input type="checkbox" name="ord" value="p004"/></label>
+<label>키위주스<input type="checkbox" name="ord" value="p005"/></label>
+<input type="submit"/>
+</form>
+
+
+
+
+
+</body>
+</html>
