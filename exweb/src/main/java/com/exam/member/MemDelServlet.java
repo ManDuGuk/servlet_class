@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MemDelServlet extends HttpServlet{
 	
-	MemberDao memberDao = new MemberDaoBatis();
+	MemberDao memberDao = MemberDaoBatis.getInstance();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

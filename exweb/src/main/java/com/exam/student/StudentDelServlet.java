@@ -13,25 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-@ WebServlet("/stu/del.do")
+@ WebServlet("/student/del.do")
 
 public class StudentDelServlet extends HttpServlet{
 	
-	StudentDao studentDao = new StudentDao();
+	StudentDao studentDao = new StudentDaoBatis();
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		System.out.println("StudentDelServlet 실행됨");
+		
 		
 		req.setCharacterEncoding("UTF-8");
 		
 		String memId=req.getParameter("memId");
 		
-		int num = studentDao.delete(memId);
+		int num = studentDao.delMember(memId);
 		
 		//resp.sendRedirect("이동할 사이트 주소"); 명령을 사용하여,
 		///웹브라우저에게 특정 사이트로 이동하라는 명령을 담은 응답을 전송
-		resp.sendRedirect(req.getContextPath()+"/stu/list.do");
+		resp.sendRedirect(req.getContextPath()+"/student/list.do");
 
 //		resp.setContentType("text/html;charset=UTF-8");
 //		PrintWriter out = resp.getWriter();

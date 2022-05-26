@@ -3,6 +3,7 @@ package com.exam.student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,22 +12,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.exam.member.MemberVo;
 
 
 
-@ WebServlet("/stu/list.do")
+
+@ WebServlet("/student/list.do")
 
 public class StudentListServlet extends HttpServlet{
 	
-	StudentDao sudentDao = new StudentDao();
+	StudentDao studentDao = new StudentDaoBatis();
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//"http://localhost:8000/web/member/list.do"로 요청을 보내면,
 		//웹브라우저에서 회원목록이 출력되도록 구현
 		//System.out.println("MemListServlet 실행됨");
 		
 		//요청이 올때마다
-		ArrayList<StudentVo> list = sudentDao.selectList();
+		List<StudentVo> list = studentDao.selectMemberList();
 		
 		req.setAttribute("stuList", list);
 		

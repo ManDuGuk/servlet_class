@@ -12,16 +12,18 @@
 		<body>
 		<h1>학생목록</h1>
 		
-		<a href='${pageContext.request.contextPath}/stu/addform.do'>학생추가</a><br>
+		<a href='${pageContext.request.contextPath}/student/add.do'>학생추가</a><br>
 		
 		
 		학생번호: 학생이름 :학생포인트<br>
 
 		<c:forEach var="vo" items="${stuList}">
 		
-			${vo.memId} : ${vo.memName} : ${vo.memPoint}
-			<a href='${pageContext.request.contextPath}/stu/del.do?memId=${vo.memId}'>삭제</a>
-			<a href='${pageContext.request.contextPath}/stu/update.do?memName=${vo.memName}'>수정</a><br/>
+			<a href="${pageContext.request.contextPath}/student/edit.do?memId=${vo.memId}"><c:out value=" ${vo.memId}" escapeXml="true"/></a>
+			: ${vo.memName} : ${vo.memPoint}
+			
+			<a href='${pageContext.request.contextPath}/student/del.do?memId=${vo.memId}'>삭제</a>
+			<br/>
 		</c:forEach>
 
 			

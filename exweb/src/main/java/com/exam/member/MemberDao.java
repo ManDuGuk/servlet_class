@@ -15,4 +15,6 @@ public interface MemberDao {
 
 	int updatetMember(MemberVo vo);
 
+	MemberVo selectLoginMember(MemberVo vo);
+
 }

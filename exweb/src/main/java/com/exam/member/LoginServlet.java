@@ -9,13 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
 
-@ WebServlet("/member/add.do")
+@ WebServlet("/member/login.do")
 
-public class MemAddServlet extends HttpServlet{
+public class LoginServlet extends HttpServlet{
 	
 	MemberDao memberDao = MemberDaoBatis.getInstance();
 	
@@ -26,7 +27,7 @@ public class MemAddServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 				
-        req.getRequestDispatcher("/WEB-INF/jsp/member/MemAddForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/member/login.jsp").forward(req, resp);
 
 	}
 	
@@ -42,32 +43,23 @@ public class MemAddServlet extends HttpServlet{
 		MemberVo vo=new MemberVo();
 		vo.setMemId(req.getParameter("memId"));
 		vo.setMemPass(req.getParameter("memPass"));
-		vo.setMemName(req.getParameter("memName"));
-		vo.setMemPoint(Integer.parseInt(req.getParameter("memPoint")));
-		int num = memberDao.insertMember(vo);
+	
+		MemberVo memVo = memberDao.selectLoginMember(vo);
 		
-		//resp.sendRedirect("이동할 사이트 주소"); 명령을 사용하여,
-		///웹브라우저에게 특정 사이트로 이동하라는 명령을 담은 응답을 전송
-		resp.sendRedirect(req.getContextPath()+"/member/list.do");
+		if(memVo==null) { //로그인이 실해한 경우,다시 로그인 페이지로 이동
+			//안돼 돌아가~
+			resp.sendRedirect(req.getContextPath()+"/member/login.do");
+		}else {//로그인이 성공한 경우
+			
+			//현재 요청(을 보낸사용자)가 속한 세션객체 가져오기
+			HttpSession session = req.getSession();
+			//로그인 성공한 사용자 정보를 세션에 loginUser라는 이름으로 저장
+			session.setAttribute("loginUser", memVo);
+			//회원목록 페이지로 이동
+			resp.sendRedirect(req.getContextPath()+"/member/list.do");
+		}
 		
 		
-//		resp.setContentType("text/html;charset=UTF-8");
-//		PrintWriter out = resp.getWriter();
-//		
-//		out.println("<!DOCTYPE html>");
-//		out.println("<html>");
-//		out.println("<head>");
-//		out.println("<meta charset=\"UTF-8\">");;
-//		
-//		out.println("<title>Insert title here</title>");
-//		out.println("</head>");
-//		out.println("<body>");
-//		out.println("<h1>회원추가</h1>");
-//		
-//		out.println(num+" 명의 회원이 추가되었습니다.");
-//		
-//		out.println("</body>");
-//		out.println("</html>");;
 	}
 
 }

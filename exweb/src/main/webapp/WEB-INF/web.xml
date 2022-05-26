@@ -39,7 +39,7 @@
   <url-pattern>/Life.do</url-pattern>
   </servlet-mapping>
   
-  <!-- 필터 등록 -->
+  <!-- 인코딩 필터 등록 -->
   <filter>
   	<filter-name>encFilter</filter-name>
   	<filter-class>com.exam.comm.MyFilter</filter-class>
@@ -52,6 +52,19 @@
   	<filter-name>encFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!-- 로그인 필터 등록 -->
+  <filter>
+  	<filter-name>loginFilter</filter-name>
+  	<filter-class>com.exam.comm.LoginFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>loginFilter</filter-name>
+  	<!-- /* 모든 경로에서 다 실행하겠다는 의미 -->
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   
   <!-- 리스너 등록 -->
   <listener>

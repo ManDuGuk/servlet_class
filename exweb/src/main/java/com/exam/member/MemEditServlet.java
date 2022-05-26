@@ -10,14 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
+//과제
+//1.변경하려는 회원아이디가 로그인한 회원의 아이디와 다르다면 변경되지 않도록 구현
+//2.회원정보 변경 화면에서도 ,화명의 회원이이디가 로그인한 회원의 아이디와 다르다면,이름,포인트 값 변경이 불가능하고 submit버튼도 출력되지않도록 구현
 
 @ WebServlet("/member/edit.do")
 
 public class MemEditServlet extends HttpServlet{
 	
-	MemberDao memberDao = new MemberDaoBatis();
+	MemberDao memberDao = MemberDaoBatis.getInstance();
 	
 	//서블릿의 service() 메서드:요청방식에 상관없이 실행되는 메서드
 	//서블릿의 doxxx()메서드 :요청 방식이 xxx인 경우에 실행되는 메서드
@@ -47,7 +48,7 @@ public class MemEditServlet extends HttpServlet{
 		
 		MemberVo vo=new MemberVo();
 		vo.setMemId(req.getParameter("memId"));
-		vo.setMemPass(req.getParameter("memPass"));
+//		vo.setMemPass(req.getParameter("memPass"));
 		vo.setMemName(req.getParameter("memName"));
 		vo.setMemPoint(Integer.parseInt(req.getParameter("memPoint")));
 		int num = memberDao.updatetMember(vo);

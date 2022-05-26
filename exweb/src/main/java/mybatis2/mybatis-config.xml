@@ -4,14 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-<settings>
-	<!-- 밑줄표기법의 커럼명을 낙타 표기법의 변수명과 자동맵핑 -->
+<!-- <settings>
+	밑줄표기법의 커럼명을 낙타 표기법의 변수명과 자동맵핑
 	<setting name="mapUnderscoreToCamelCase" value="true"/>
-</settings>
+</settings> -->
 
 <typeAliases>
 <!--마이 바티스 설정파일에서 com.exam.member.MemberVo 대신 MemberVo 사용가능  -->
-	<typeAlias type="com.exam.member.MemberVo" alias="MemberVo"/>
+	<typeAlias type="com.exam.student.StudentVo" alias="StudentVo"/>
+	
 </typeAliases>
 
   <environments default="development">
@@ -25,11 +26,8 @@
       </dataSource>
     </environment>
   </environments>
-  
-  
   <mappers>
   <!-- 마이바티스를 통해서 실행할 sql문들을 정의해놓은 xml파일들 -->
-     <mapper resource="mybatis/MemberMapper.xml"/>
-    
+    <mapper resource="mybatis2/StudentMapper.xml"/>
   </mappers>
 </configuration>
