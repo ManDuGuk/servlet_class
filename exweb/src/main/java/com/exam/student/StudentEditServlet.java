@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class StudentEditServlet extends HttpServlet{
 	
-	StudentDao studentDao = new StudentDaoBatis();
+	StudentDao studentDao = StudentDaoBatis.getInstance();
 	
 	//서블릿의 service() 메서드:요청방식에 상관없이 실행되는 메서드
 	//서블릿의 doxxx()메서드 :요청 방식이 xxx인 경우에 실행되는 메서드

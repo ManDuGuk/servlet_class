@@ -9,24 +9,60 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class StudentDaoBatis implements StudentDao{
-	SqlSessionFactory sqlSessionFactory=null;
+import com.exam.comm.MyBatisUtil;
+import com.exam.member.MemberDaoBatis;
+import com.exam.member.MemberVo;
 
-	public StudentDaoBatis() {
+public class StudentDaoBatis implements StudentDao{
+	
+	
+	//싱글톤(Singleton)패턴
+		/////////////////////////////////////////////////////////////////////////////////////////
 		
-		try {
-			//마이바티스 설정 파일 위치
-			String resource = "mybatis2/mybatis-config.xml"; 
-			//마이바티스 설정파일을 읽을수 있는 입력 스트림
-			InputStream inputStream = Resources.getResourceAsStream(resource); 
-			//마이바티스 설정 파일의 내용대로 마이바티스 본체(sqlSessionFactory)를 생성
-			
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream); 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
+		//클래스의 인스턴스를 1개만 생성하여 애플리케이션 전체에서 공유하여 사용하고 싶을 때 
+		//생성자를 하나 만들자
+		//클래스 외부에서 생성자 호출을 금지하기 위해 private로 묶는다.
+		private StudentDaoBatis() {}
 		
-	}
+		//클래스 내부에서 인스턴스 생성 및 보관
+		//자기 자신의 객체를 내부에 생성했다.
+		//MemberDaoBatis는 해당 코드를 포함해서 다 정의 되어진것이고
+		//아래 코드는 해당 getInstance코드가 호출되서 실행되어질떄 그때 사용이 되면서 실행되는것이다.
+		//이는 자바를 좀더 공부하자.헷갈린다.
+		//이미 아래 MemberDaoBatis는 다 정의 되어진 것이고 아래코드는 스택틱이 실행될때 생성되서 실행되는 코드이다.
+		private static StudentDaoBatis studentDaoBatis=new StudentDaoBatis();
+
+		
+		//어디서든 접근 가능하도록 설정
+		//클래스 외부에서 필요한 경우,보관한 인스턴스를 제공하는 메소드
+		public static StudentDaoBatis getInstance() {
+			return studentDaoBatis;
+		}
+	    /////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//sqlSessionFactory는 하나의 어플리케이션에서 하나만 만들어 쓰는 편이 좋다. 
+		//MybatisUtill에서 가져온 sqlSessionFactory를 공유해서 쓰겠다.
+		private SqlSessionFactory sqlSessionFactory=MyBatisUtil.getSqlSessionFactory();
+
+		//MybatisUtill에서 가져올것이다.
+		
+//		public MemberDaoBatis() {
+//			
+//			try {
+//				//마이바티스 설정 파일 위치
+//				String resource = "mybatis/mybatis-config.xml"; 
+//				//마이바티스 설정파일을 읽을수 있는 입력 스트림
+//				InputStream inputStream = Resources.getResourceAsStream(resource); 
+//				//마이바티스 설정 파일의 내용대로 마이바티스 본체(sqlSessionFactory)를 생성
+//				//sqlSessionFactory는 하나의 어플리케이션에서 하나만 만들어 쓰는 편이 좋다. 
+//				sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream); 
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} 
+//			
+//		}
+
 
 	@Override
 	public List<StudentVo> selectMemberList() {
@@ -94,6 +130,16 @@ public class StudentDaoBatis implements StudentDao{
 			}
 		
 		return num;
+	}
+
+	@Override
+	public StudentVo selectLoginMember(StudentVo vo) {
+		StudentVo memVo=null;
+		try (SqlSession session = sqlSessionFactory.openSession()) {
+			
+			memVo = session.selectOne("com.exam.student.StudentDao.selectLoginMember",vo);
+			}
+		return memVo;
 	}
 
 	

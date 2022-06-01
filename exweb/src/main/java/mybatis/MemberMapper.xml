@@ -39,24 +39,24 @@
    SELECT mem_id,mem_pass,mem_name,mem_point FROM MEMBER -->
    
     <!--3.mapUnderscoreToCamelCase 세팅을 통해 매핑하주거나  -->
-   <select id="selectMemberList" resultType="MemberVo">
+   <select id="selectMemberList" resultMap="memberMap">
    SELECT mem_id,mem_name,mem_point FROM MEMBER
   
   </select>
   
   
   <!--수정 sql -->
-   <select id="selectMember" parameterType="string" resultType="MemberVo">
+   <select id="selectMember" parameterType="string" resultMap="memberMap">
    SELECT mem_id,mem_name,mem_point FROM MEMBER WHERE mem_id= #{memId}
   </select>
   
-  <insert id="insertMember" parameterType="MemberVo">
+  <insert id="insertMember" parameterType="memberVO">
   INSERT into MEMBER 
   (mem_id,mem_pass,mem_name,mem_point)			
   VALUES(#{memId},#{memPass},#{memName},#{memPoint})
   </insert>
   
-  <update id="updatetMember" parameterType="MemberVo">
+  <update id="updatetMember" parameterType="memberVO">
   UPDATE MEMBER 
   SET mem_name=#{memName},mem_point=#{memPoint}			
   WHERE mem_id=#{memId}
@@ -68,7 +68,7 @@
   DELETE from MEMBER where mem_id = #{memId}
   </delete>
   
-  <select id="selectLoginMember" parameterType="MemberVo" resultType="MemberVo">
+  <select id="selectLoginMember" parameterType="memberVO" resultMap="memberMap">
    SELECT mem_id,mem_name,mem_point FROM MEMBER 
    WHERE mem_id= #{memId} and mem_pass= #{memPass}
   </select>

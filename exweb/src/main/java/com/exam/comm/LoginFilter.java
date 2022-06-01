@@ -30,6 +30,7 @@ public class LoginFilter implements Filter{
 		//필터객체가 처음 생성된후, 1회만 실행: 보통 필터 포기화 작업 구현
 		
 		//로그인 없이 사용가능한 경로들을 지목
+		
 		whiteList.add("/member/login.do");
 		whiteList.add("/member/add.do");
 	}

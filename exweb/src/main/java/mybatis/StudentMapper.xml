@@ -66,6 +66,9 @@
   DELETE from STUDENT where STU_NO = #{memId}
   </delete>
   
-  
+  <select id="selectLoginMember" parameterType="StudentVo" resultMap="studentMap">
+   SELECT STU_NO,STU_NAME,STU_SCORE FROM STUDENT 
+   WHERE STU_NO= #{memId} AND STU_NAME = #{memName}
+  </select>
   
 </mapper>

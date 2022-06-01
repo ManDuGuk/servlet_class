@@ -21,6 +21,8 @@ public interface StudentDao {
 	StudentVo selectMember(String memId);
 
 	int updatetMember(StudentVo vo);
+
+	StudentVo selectLoginMember(StudentVo vo);
 	
 //	//Data
 //	//Access

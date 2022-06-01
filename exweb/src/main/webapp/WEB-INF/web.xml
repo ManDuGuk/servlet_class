@@ -53,7 +53,7 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- 로그인 필터 등록 -->
+  <!-- 로그인 필터(멤버) 등록 -->
   <filter>
   	<filter-name>loginFilter</filter-name>
   	<filter-class>com.exam.comm.LoginFilter</filter-class>
@@ -62,7 +62,21 @@
   <filter-mapping>
   	<filter-name>loginFilter</filter-name>
   	<!-- /* 모든 경로에서 다 실행하겠다는 의미 -->
-  	<url-pattern>/*</url-pattern>
+  	<!-- 2022.06.01 필터에서 student까지 다 걸리는걸 방지하기 위해-->
+  	<url-pattern>/member/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- 로그인 필터(스튜) 등록 -->
+  <filter>
+  	<filter-name>loginFilter2</filter-name>
+  	<filter-class>com.exam.comm.LoginFilter2</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>loginFilter2</filter-name>
+  	<!-- /* 모든 경로에서 다 실행하겠다는 의미 -->
+  	<!-- 2022.06.01 필터에서 student에만 걸리도록-->
+  	<url-pattern>/student/*</url-pattern>
   </filter-mapping>
   
   

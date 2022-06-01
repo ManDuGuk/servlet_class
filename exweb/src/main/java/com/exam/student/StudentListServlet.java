@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.exam.member.MemberVo;
+
 
 
 
@@ -21,7 +21,7 @@ import com.exam.member.MemberVo;
 
 public class StudentListServlet extends HttpServlet{
 	
-	StudentDao studentDao = new StudentDaoBatis();
+	StudentDao studentDao = StudentDaoBatis.getInstance();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//"http://localhost:8000/web/member/list.do"로 요청을 보내면,

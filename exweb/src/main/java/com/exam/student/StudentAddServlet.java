@@ -19,7 +19,7 @@ import com.exam.member.MemberVo;
 
 public class StudentAddServlet extends HttpServlet{
 	
-	StudentDao studentDao = new StudentDaoBatis();
+	StudentDao studentDao = StudentDaoBatis.getInstance();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

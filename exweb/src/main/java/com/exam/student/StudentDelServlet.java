@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class StudentDelServlet extends HttpServlet{
 	
-	StudentDao studentDao = new StudentDaoBatis();
+	StudentDao studentDao = StudentDaoBatis.getInstance();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
