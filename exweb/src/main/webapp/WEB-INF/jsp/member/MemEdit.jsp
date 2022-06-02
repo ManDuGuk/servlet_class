@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 		<!DOCTYPE html>
 		<html>
@@ -17,11 +17,21 @@
 		
 	
 		<form action='${pageContext.request.contextPath}/member/edit.do' method='post'>
-		회원 아이디:<input type='text' name ='memId' value='${requestScope.memVO.memId}' readonly="readonly"> <br>
-		<%-- 회원 비밀번호:<input type='password' name ='memPass' value='${requestScope.memVO.memPass}'> <br> --%>
-		회원 이름:<input type='text' name ='memName' value='${requestScope.memVO.memName}'> <br>
-		회원 포인트:<input type='text' name ='memPoint' value='${requestScope.memVO.memPoint}'> <br>
-		<input type='submit'>
+		<c:choose>
+			<c:when test="${sessionScope.loginUser.memId == memVo.memId}">
+				아이디 : <input type='text' name='memId' value="${memVo.memId}" readonly="readonly"><br>
+				<%-- 비밀번호 : <input type='password' name='memPass' value="${memVo.memPass}"><br> --%>
+				이름 : <input type='text' name='memName' value="${memVo.memName}"><br>
+				포인트 : <input type='text' name='memPoint' value="${memVo.memPoint}"><br>
+				<input type='submit'>
+			</c:when>
+			<c:otherwise>
+				아이디 : <input type='text' name = 'memId' value="${memVo.memId}" readonly="readonly"/><br>
+				<%-- 비밀번호 : <input type='password' name = 'memPass' value="${memVo.memPass}"/><br> --%>
+				이름 : <input type='text' name = 'memName' value="${memVo.memName}" readonly="readonly"/><br>
+				포인트 : <input type='text' name = 'memPoint' value="${memVo.memPoint}" readonly="readonly" /><br>
+			</c:otherwise>
+		</c:choose>
 		</form>
 		
 		

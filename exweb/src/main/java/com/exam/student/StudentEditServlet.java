@@ -30,7 +30,7 @@ public class StudentEditServlet extends HttpServlet{
 		
 		StudentVo vo=studentDao.selectMember(memId);
 		
-		req.setAttribute("memVO", vo);
+		req.setAttribute("memVo", vo);
 		
         req.getRequestDispatcher("/WEB-INF/jsp/student/StuEdit.jsp").forward(req, resp);
 

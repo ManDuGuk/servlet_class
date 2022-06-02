@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //과제
 //1.변경하려는 회원아이디가 로그인한 회원의 아이디와 다르다면 변경되지 않도록 구현
@@ -31,7 +32,7 @@ public class MemEditServlet extends HttpServlet{
 		
 		MemberVo vo=memberDao.selectMember(memId);
 		
-		req.setAttribute("memVO", vo);
+		req.setAttribute("memVo", vo);
 		
         req.getRequestDispatcher("/WEB-INF/jsp/member/MemEdit.jsp").forward(req, resp);
 
@@ -42,8 +43,19 @@ public class MemEditServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//포트스 방식으로 파라미터를 받는다면 항상해주는 작업이기에 해당 코드를 필터로 만들겠다.
-		//req.setCharacterEncoding("UTF-8");
+		//로그인 회원아이디와 변경할 회원아이디가 다르면 
+		HttpSession session =req.getSession();
+		MemberVo mvo=(MemberVo)session.getAttribute("loginUser");
+		if(!mvo.getMemId().equals(req.getParameter("memId"))) {
+			//여기다 어떻게 할지 구현
+			//여기선 오류를 일부러 발생시키기에 return을 넣을 필요가 없다.
+			throw new RuntimeException("로그인한 사용자와 다른 회원 정보는 변경 불가");
+			
+			//예외를 발생시킬것이 아니라면
+			//일단 아래쪽 코드를 진행못하게 return으로 막는 것이 중요하다.
+			//return;
+		}
+		//----------------------------------------
 		
 		
 		MemberVo vo=new MemberVo();
@@ -57,24 +69,7 @@ public class MemEditServlet extends HttpServlet{
 		///웹브라우저에게 특정 사이트로 이동하라는 명령을 담은 응답을 전송
 		resp.sendRedirect(req.getContextPath()+"/member/list.do");
 		
-		
-//		resp.setContentType("text/html;charset=UTF-8");
-//		PrintWriter out = resp.getWriter();
-//		
-//		out.println("<!DOCTYPE html>");
-//		out.println("<html>");
-//		out.println("<head>");
-//		out.println("<meta charset=\"UTF-8\">");;
-//		
-//		out.println("<title>Insert title here</title>");
-//		out.println("</head>");
-//		out.println("<body>");
-//		out.println("<h1>회원추가</h1>");
-//		
-//		out.println(num+" 명의 회원이 추가되었습니다.");
-//		
-//		out.println("</body>");
-//		out.println("</html>");;
+
 	}
 
 }
