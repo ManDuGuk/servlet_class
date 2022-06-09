@@ -28,30 +28,33 @@
 	<context:component-scan base-package="com.exam.core"></context:component-scan> 
 	
 	<!-- 끼워넣을 코드를 담고 있는 MyAdvice 객체를 스프링에 등록 -->
-	<bean id="adv" class="com.exam.core.MyAdvice"></bean>
+	<!-- <bean id="adv" class="com.exam.core.MyAdvice"></bean> -->
 	
-	
+	<!-- 
 	<aop:config>
-		<!--여러번 사용하는 포인트컷은 이름을 붙여 등록시켜서 사용 가능  -->
-		<!-- <aop:pointcut expression="execution(* com.exam.core.MyService.*(..))" id="pc"/> -->
-		<!-- <aop:pointcut expression="execution(* com.exam.core.MyService.getH*(..))" id="pc"/> -->
+		여러번 사용하는 포인트컷은 이름을 붙여 등록시켜서 사용 가능 
+		<aop:pointcut expression="execution(* com.exam.core.MyService.*(..))" id="pc"/>
+		<aop:pointcut expression="execution(* com.exam.core.MyService.getH*(..))" id="pc"/>
 		<aop:pointcut expression="execution(* com.exam.core.*.*(..))" id="pc"/>
 	
-		<!-- aspect:어떤 코드(Advice)를 어느 지점(pointcut)에 끼워넣을 것인지를 설정 -->
+		aspect:어떤 코드(Advice)를 어느 지점(pointcut)에 끼워넣을 것인지를 설정
 		<aop:aspect ref="adv">
-			<!-- adv객체의 bm메서드를 MyService 객체의 모든 메소드 실행 전에 끼워넣어서 실행 -->
-			<!-- <aop:before method="bm" pointcut-ref="pc"/> -->
+			adv객체의 bm메서드를 MyService 객체의 모든 메소드 실행 전에 끼워넣어서 실행
+			<aop:before method="bm" pointcut-ref="pc"/>
 			
 			
-			<!-- adv객체의 bm메서드를 MyService 객체의 모든 메소드 실행 전에 끼워넣어서 실행 -->
-			<!-- <aop:after method="am" pointcut-ref="pc"/> -->
+			adv객체의 bm메서드를 MyService 객체의 모든 메소드 실행 전에 끼워넣어서 실행
+			<aop:after method="am" pointcut-ref="pc"/>
 			
 			<aop:around method="rm" pointcut-ref="pc"/>
 			
 		</aop:aspect>
 	</aop:config>
 	
-	
+	 -->
+	 
+	 <!-- @Aspect와 같은 어노테이션을 사용하여 AOP 설정 -->
+	 <aop:aspectj-autoproxy/>
 	
 		
 </beans>

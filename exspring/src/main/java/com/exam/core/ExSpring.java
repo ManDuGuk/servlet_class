@@ -24,9 +24,9 @@ public class ExSpring {
 		MyApp app=(MyApp) context.getBean("ma");
 		app.say();
 		
-		
-		for(String bn :context.getBeanDefinitionNames()) {
-			System.out.println(bn+":"+context.getBean(bn).getClass().getName());
-		}
+		//스프링에 등록되어있는 객체들의 목록
+//		for(String bn :context.getBeanDefinitionNames()) {
+//			System.out.println(bn+":"+context.getBean(bn).getClass().getName());
+//		}
 	}
 }

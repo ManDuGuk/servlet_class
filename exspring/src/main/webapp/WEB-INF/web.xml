@@ -1,22 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- 초기화 파라미터 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- 리스너 -->
 	<listener>
+		 <!-- 웹어플리케이션이 시작될때와 종료될때 작용함
+		 웹어플리케이션이 처음 시작될때 스프링 컨테이이너(객체를 담아두는 바구니)를 만듬 -->
+		 <!-- root-context.xml 설정파일의 내용대로 객체를 생성하여 보관하는
+		 스프링 객체 컨테이너 생성 -->
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
 	<!-- Processes application requests -->
+	<!-- 요청을 받아서 스프링에 등록된 객체들을 사용하여 처리하는 서블릿 -->
+	<!-- servlet-context.xml 설정파일의 내용대로 객체를 생성하여 보관하는
+		 스프링 객체 컨테이너 생성 -->
+	<!-- 서블렛 -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
+			<!--  -->
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
@@ -25,7 +37,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
 </web-app>

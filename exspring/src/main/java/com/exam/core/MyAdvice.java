@@ -2,9 +2,17 @@ package com.exam.core;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
+@Aspect //aop 설정을 담고 있는 클래스임을 의미
+@Component //스프링이 알아서 객체를 생성하게끔 어노테이션을 달아줌
 public class MyAdvice {
-
+//	 @Before(value = "execution(* com.exam.core.*.*(..))")//value값에는 포인트컷 표현식을 삽입
 	 public void bm(JoinPoint jp) {
 	        
 	 
@@ -15,7 +23,8 @@ public class MyAdvice {
 	 
 	        System.out.println("MyAdvice bm 실행."+className + "." + methodName);
 	    }
-	 
+	 //@After(value = "pc()")//value값에는 포인트컷 표현식을 삽입
+	 //@After("pc()")//value값에는 포인트컷 표현식을 삽입
 	 public void am(JoinPoint jp) {
 	        
 		 
@@ -28,6 +37,7 @@ public class MyAdvice {
 	    }
 	 
 	 
+	 @Around("pc()")
 	 public Object rm(ProceedingJoinPoint pjp) throws Throwable {
 	        System.out.println("MyAdvice rm start.");
 	        long time1 = System.currentTimeMillis();
@@ -43,6 +53,10 @@ public class MyAdvice {
 	        System.out.println("MyAdvice rm end. Time("+ (time2 - time1) + ")");
 	        return retVal;
 	    }
+	 
+	 //반복적으로 사용하는 포인트컷을 별도로 정의하고, ("pc()")와 같이 사용 가능
+	 @Pointcut(value = "execution(* com.exam.core.*.*(..))")//value값에는 포인트컷 표현식을 삽입
+	 private void pc() {} //반환타입은 void,메서드 내용 불필요
 	 
 	 
 }
