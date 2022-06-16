@@ -62,6 +62,7 @@
 		-->
 		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+		<!-- spring orm-->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-orm</artifactId>

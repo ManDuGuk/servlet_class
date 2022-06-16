@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -32,6 +34,7 @@
 	클래스들의 객체를 생성하여 스프링(객체 컨테이너)에 자동등록
 	 -->
 	<context:component-scan base-package="com.exam.exspring" />
+	<!-- <context:component-scan base-package="com.exam.member" /> -->
 	
 	<!-- 데이터 베이스 연결을 담당하는 커넥션풀로서 DBCP를 등록 -->
 	<beans:bean id="ds" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -48,5 +51,21 @@
 	 <!--  <beans:property name="configLocation" value="/exspring/src/main/resources/mybatis/mybatis-config.xml" /> -->
 	  <beans:property name="configLocation" value="classpath:/mybatis/mybatis-config.xml" />
 	</beans:bean>
+	
+	<!-- 
+	SqlSessionTemplate: SqlSession 구현체로서,스레드에 안전하고,
+	스프링 트랜잭션에 따라서 커밋/롤백을 수행하고,
+	마이바티스 예외를 스프링 예외로 변환
+	-->
+	<!-- 
+	<beans:bean id="SqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		생성자의 첫번째 인자로 "sqlSessionFactory"라는 이름으로 스프링에 등록된 객체를 전달
+		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
+	</beans:bean>
+	 -->
+	<!-- com.exam.exspring.member 패키지 아래에 존재하는 
+	인터페이스를 찾아서, 마이바티스를 실행하는 그 인터페이스의 구현제를 자동생성하여 스프링에 등록 -->
+	<!-- @Mapper 애노테이션이 적용된 인테페이스를 찾아서 구현제를 자동생성하여 스프링에 등록-->
+	<mybatis-spring:scan base-package="com.exam.exspring.member" annotation="org.apache.ibatis.annotations.Mapper"/>
 	
 </beans:beans>

@@ -1,9 +1,9 @@
-package com.exam.member;
+package com.exam.exspring.member;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface MemberDao {
+public interface MemberService {
 
 	List<MemberVo> selectMemberList();
 

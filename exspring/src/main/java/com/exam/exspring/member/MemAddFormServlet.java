@@ -1,3 +1,4 @@
+package com.exam.exspring.member;
 //package com.exam.member;
 //
 //import java.io.IOException;

@@ -11,6 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
+	<!-- 로깅레벨:(낮음)trace,debug,info,warn,error,fatal(높음) -->
 	<logger name="com.exam.exspring">
 		<level value="info" />
 	</logger>

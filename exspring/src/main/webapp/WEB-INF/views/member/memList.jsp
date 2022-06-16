@@ -15,7 +15,7 @@
 		<c:import url=""></c:import> --%>
 		
 		<!-- menu.jsp 포함 -->
-		<jsp:include page="/WEB-INF/jsp/menu.jsp"/>
+		<%-- <jsp:include page="/WEB-INF/jsp/menu.jsp"/> --%>
 		
 		<h1>회원목록</h1>
 		
